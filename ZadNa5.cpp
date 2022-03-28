@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 
 
 
@@ -60,21 +61,35 @@ int main()
 {
     Package message[m_size];
     Package received_message[m_size];
-    unsigned int id;
 
     create_message(message);
     shuffle(message); //send packages in random order
 
-    for(int i=0; i<m_size; i++) // sort message in right order
+    std::chrono::steady_clock::time_point begin_sorting = std::chrono::steady_clock::now(); //gets time when sorting started
+
+    for(int i=0; i<m_size; i++) // put packages in right order
         received_message[message[i].get_id()]=message[i];
     
+    std::chrono::steady_clock::time_point end_sorting = std::chrono::steady_clock::now(); //gets time when sorting started
+    
 
-    // for(int i=0 ;i<m_size; i++)  //print message (unsorted)
-    //     std::cout<< message[i].get_content() <<std::endl;
+    // Printing message (wrong order)
+    std::cout<< "Message with packages in random order: " <<std::endl;
+    
+    for(int i=0 ;i<m_size; i++) 
+        std::cout<< message[i].get_content() << " ";
+    
+    std::cout<<std::endl;
 
-    // for(int i=0 ;i<m_size; i++)  //print message (sorted)
-    //     std::cout<< received_message[i].get_content() << std::endl;
+    // Printing message (right order)
+    std::cout<< "Message with packages in right order: " <<std::endl;
+    
+    for(int i=0 ;i<m_size; i++)  
+        std::cout<< received_message[i].get_content() << " ";
+    
+    std::cout<<std::endl;
 
+    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(end_sorting - begin_sorting).count() << " microseconds"<< std::endl;
 
     
     return 0;
