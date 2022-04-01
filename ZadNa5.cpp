@@ -37,7 +37,7 @@ class Package
 void create_message(Package (&array)[m_size])
 {
     for(int i=0; i<m_size; i++)
-        array[i].set_content(i*i);
+        array[i].set_content(array[i].get_id()*array[i].get_id());
 
 }
 
