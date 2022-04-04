@@ -1,2 +1,0 @@
-Algorytm shuffle(array[N])
- Wejscie 
